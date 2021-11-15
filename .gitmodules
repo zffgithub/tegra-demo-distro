@@ -26,11 +26,11 @@
 	path = repos/meta-tegra-community
 	url = https://github.com/OE4T/meta-tegra-community.git
 	branch = hardknott
-[submodule "layers/meta-python2"]
-	path = layers/meta-python2
+[submodule "repos/meta-python2"]
+	path = repos/meta-python2
 	url = https://github.com/YoeDistro/meta-python2.git
 	branch = hardknott
-[submodule "layers/meta-ros"]
-	path = layers/meta-ros
+[submodule "repos/meta-ros"]
+	path = repos/meta-ros
 	url = https://github.com/ros/meta-ros.git
 	branch = hardknott

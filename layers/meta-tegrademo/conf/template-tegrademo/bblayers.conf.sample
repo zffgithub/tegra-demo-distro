@@ -19,4 +19,9 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-tegra-support \
   ##OEROOT##/meta-demo-ci \
   ##OEROOT##/meta-tegrademo \
+  ##TD_TOP##/repos/meta-ros/meta-ros2-galactic \
+  ##TD_TOP##/repos/meta-ros/meta-ros2 \
+  ##TD_TOP##/repos/meta-ros/meta-ros-common \
+  ##TD_TOP##/repos/meta-ros/meta-ros-python2 \
+  ##TD_TOP##/repos/meta-python2 \
   "

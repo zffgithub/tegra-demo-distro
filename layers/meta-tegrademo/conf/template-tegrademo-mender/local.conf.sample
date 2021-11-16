@@ -271,4 +271,4 @@ PACKAGECONFIG_append_pn-qemu-system-native = " sdl"
 CONF_VERSION = "1"
 
 # IMAGE_INSTALL_append=" ros-core"
-IMAGE_INSTALL_append=" packagegroup-ros-world"
+# IMAGE_INSTALL_append=" ros-base"

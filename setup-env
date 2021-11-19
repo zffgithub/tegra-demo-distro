@@ -47,7 +47,6 @@ fi
 TD_TOP=$(dirname "$THIS_SCRIPT")
 TD_TOP=$(readlink -f "$TD_TOP")
 TD_SCRIPTDIR="$TD_TOP/scripts-setup"
-export TD_TOP
 
 # Automatically update the git submodules.  It's common to forget
 # to do this after updating the main repository to latest.

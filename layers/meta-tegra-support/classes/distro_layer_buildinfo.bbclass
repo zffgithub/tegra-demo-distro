@@ -29,7 +29,7 @@ def distro_layer_buildtag(d):
     tag = dlb_git_describe(distro_layerpath(distro_layername(d), d))
     if os.getenv("USER") in ['jenkins', 'builder'] or bb.utils.to_boolean(d.getVar("PRODUCTION_BUILD")):
         return '-' + tag
-    return '-' + tag + '-' + os.getenv("USER")
+    return '-' + tag + '-' + os.getenv("USER", "cyberdog")
 
 def distro_layer_branch(d):
     return dlb_git_branch(distro_layerpath(distro_layername(d), d))

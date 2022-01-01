@@ -24,14 +24,14 @@ function build_online() {
     # sudo chmod -R 777 ../tegra-demo-distro/
     . ./setup-env --machine jetson-xavier-nx-devkit --distro tegrademo-mender
     #bitbake demo-image-full
-    bitbake demo-image-base
+    bitbake demo-image-custom
 }
 
 function build_offline() {
     cd $DIR
     . ./setup-env --machine jetson-xavier-nx-devkit --distro tegrademo-mender
     #bitbake demo-image-full
-    bitbake demo-image-base
+    bitbake demo-image-custom
 }
 
 if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then

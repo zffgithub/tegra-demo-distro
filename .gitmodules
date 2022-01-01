@@ -26,3 +26,15 @@
 	path = repos/meta-tegra-community
 	url = https://github.com/OE4T/meta-tegra-community
 	branch = master
+[submodule "repos/meta-ros"]
+	path = repos/meta-ros
+	url = https://github.com/ros/meta-ros.git
+	branch = honister
+[submodule "repos/meta-python2"]
+	path = repos/meta-python2
+	url = https://github.com/YoeDistro/meta-python2.git
+	branch = honister
+[submodule "repos/meta-k3s"]
+	path = repos/meta-k3s
+	url = https://github.com/zffgithub/meta-k3s.git
+	branch = honister

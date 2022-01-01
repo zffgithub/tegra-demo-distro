@@ -4,6 +4,20 @@ Reference/demo distribution for NVIDIA Jetson platforms
 using Yocto Project tools and the meta-tegra BSP layer.
 
 ![Build status](https://builder.madison.systems/badges/tegrademo-master.svg)
+####submodule manage
+-------------------------
+    git submodule add  -b master --name poky --force git://git.yoctoproject.org/poky repos/poky
+    git submodule add  -b master --name repos/meta-openembedded --force git://git.openembedded.org/meta-openembedded repos/meta-openembedded
+    git submodule add  -b master --name repos/meta-virtualization --force git://git.yoctoproject.org/meta-virtualization repos/meta-virtualization
+    git submodule add  -b dunfell-with-overrides-conversion --name repos/meta-mender --force https://github.com/madisongh/meta-mender.git repos/meta-mender
+    git submodule add  -b dunfell-with-overrides-conversion --name repos/meta-mender-community --force https://github.com/OE4T/meta-mender-community.git repos/meta-mender-community
+    git submodule add  -b master --name repos/meta-tegra --force https://github.com/OE4T/meta-tegra.git repos/meta-tegra
+    git submodule add  -b master --name repos/meta-tegra-community --force https://github.com/OE4T/meta-tegra-community repos/meta-tegra-community
+    git submodule add  -b honister --name repos/meta-ros --force https://github.com/ros/meta-ros.git repos/meta-ros
+    git submodule add  -b honister --name repos/meta-python2 --force https://github.com/YoeDistro/meta-python2.git repos/meta-python2
+    git submodule add  -b honister --name repos/meta-k3s --force https://github.com/zffgithub/meta-k3s.git repos/meta-k3s
+    cd layers/
+    ln -s ../repos/meta-k3s ../layers/meta-k3s
 
 Metadata layers are brought in as git submodules:
 

@@ -266,3 +266,74 @@ PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
 # track the version of this file when it was generated. This can safely be ignored if
 # this doesn't mean anything to you.
 CONF_VERSION = "1"
+
+
+# IMAGE_INSTALL:append=" ros-core"
+IMAGE_INSTALL:append=" packagegroup-ros-custom"
+# all package for ros2
+# IMAGE_INSTALL:append=" packagegroup-ros-world"
+# IMAGE_INSTALL:append = " hello"
+IMAGE_INSTALL:append = " net-tools iperf3 bridge-utils dhcpcd dhcp-relay kea gnutls"
+IMAGE_INSTALL:append = " networkmanager networkmanager-openvpn networkmanager-nmcli"
+# k3s
+IMAGE_INSTALL:append = " k3s k3s-init"
+# PREFERRED_PROVIDER_virtual/kernel ?= "linux-custom"
+# do_compile failures
+
+# Summary: 7 tasks failed:
+#   /home/build/shared/tegra-demo-distro/layers/meta-ros/meta-ros2-galactic/generated-recipes/vision-opencv/cv-bridge_2.2.1-2.bb:do_configure
+#   /home/build/shared/tegra-demo-distro/layers/meta-ros/meta-ros2-galactic/generated-recipes/vision-opencv/image-geometry_2.2.1-2.bb:do_configure
+#   /home/build/shared/tegra-demo-distro/layers/meta-ros/meta-ros2-galactic/generated-recipes/rmf-ros2/rmf-traffic-ros2_1.4.0-1.bb:do_compile
+#   /home/build/shared/tegra-demo-distro/layers/meta-ros/meta-ros2-galactic/generated-recipes/openvslam/openvslam_0.2.3-3.bb:do_configure
+#   /home/build/shared/tegra-demo-distro/layers/meta-ros/meta-ros2-galactic/generated-recipes/demos/image-tools_0.14.3-1.bb:do_configure
+#   /home/build/shared/tegra-demo-distro/layers/meta-ros/meta-ros2-galactic/generated-recipes/demos/intra-process-demo_0.14.3-1.bb:do_configure
+#   /home/build/shared/tegra-demo-distro/layers/meta-ros/meta-ros2-galactic/generated-recipes/librealsense2/librealsense2_2.48.0-2.bb:do_package_qa
+
+# RDEPENDS:${PN}:remove = " \
+#     rviz-ogre-vendor \
+#     rviz-visual-tools \
+#     moveit-visual-tools \
+#     moveit-core \
+#     mavros \
+#     pcl \
+#     rmf-traffic-ros2 \
+#     rmf-visualization-schedule \
+#     rmf-fleet-adapter \
+#     rmf-task-ros2 \
+#     rmf-fleet-adapter-python \
+#     cv-bridge \
+#     nav2-waypoint-follower \
+#     stereo-image-proc \
+#     swri-geometry-util \
+#     swri-image-util \
+#     swri-opencv-util \
+#     swri-transform-util \
+#     swri-route-util \
+#     theora-image-transport \
+#     camera-calibration \
+#     compressed-depth-image-transport \
+#     compressed-image-transport \
+#     depth-image-proc \
+#     ifm3d-core \
+#     image-proc \
+#     image-publisher \
+#     image-rotate \
+#     image-view \
+#     image-geometry \
+#     camera-calibration \
+#     depth-image-proc \
+#     depthimage-to-laserscan \
+#     openvslam \
+#     image-tools \
+#     intra-process-demo \
+#     librealsense2 \
+#     realsense2-camera \
+# "
+
+# custom ros2 rm
+RDEPENDS:${PN}:remove = " \
+    launch-testing-ament-cmake \
+    ros-testing \
+    tracetools-read \
+    zstd-vendor \
+"

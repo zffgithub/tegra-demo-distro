@@ -248,3 +248,17 @@ PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
 # track the version of this file when it was generated. This can safely be ignored if
 # this doesn't mean anything to you.
 CONF_VERSION = "2"
+
+###########  ros  ###########
+# CORE_IMAGE_EXTRA_INSTALL += "packagegroup-ros-world"
+CORE_IMAGE_EXTRA_INSTALL += "ros-core"
+# ROS_OE_RELEASE_SERIES = "kirkstone" # not action
+ROS_WORLD_SKIP_GROUPS += " opengl"
+ROS_WORLD_SKIP_GROUPS += " x11"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES:remove = " rcss3d-agent nao-button-sim"
+# LTTng-modules requires CONFIG_KPROBES on kernels >= 5.7.0
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES:remove = "smacc2 smacc2-msgs tracetools-trace tracetools-launch ros2trace"
+# fix conflicts
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES:remove = "examples-rclpy-executors examples-rclpy-minimal-action-client microstrain-inertial-driver"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES:remove = "osrf-testing-tools-cpp"
+ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES:remove = "suitesparse-spqr suitesparse-colamd suitesparse-cholmod ceres-solver cartographer cartographer-ros"

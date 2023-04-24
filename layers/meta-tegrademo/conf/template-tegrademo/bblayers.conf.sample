@@ -19,4 +19,19 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-tegra-support \
   ##OEROOT##/meta-demo-ci \
   ##OEROOT##/meta-tegrademo \
+  ##OEROOT##/meta-ros/meta-ros2-humble \
+  ##OEROOT##/meta-ros/meta-ros2 \
+  ##OEROOT##/meta-ros/meta-ros-common \
+  ##OEROOT##/meta-ros/meta-ros-python2 \
+  ##OEROOT##/meta-python2 \
   "
+
+BBFILE_PRIORITY_ros2-humble-layer:forcevariable = "39"
+BBFILE_PRIORITY_ros2-layer:forcevariable = "38"
+BBFILE_PRIORITY_ros-common-layer:forcevariable = "37"
+BBFILE_PRIORITY_meta-python:forcevariable = "13"
+
+LAYERSERIES_COMPAT_ros2-humble-layer:append = " honister"
+LAYERSERIES_COMPAT_ros2-layer:append = " honister"
+LAYERSERIES_COMPAT_ros-common-layer:append = " honister"
+LAYERSERIES_COMPAT_ros-python2:append = " honister"

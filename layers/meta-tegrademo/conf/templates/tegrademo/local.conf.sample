@@ -262,3 +262,5 @@ ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES:remove = "smacc2 smacc2-msgs tracetools-
 ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES:remove = "examples-rclpy-executors examples-rclpy-minimal-action-client microstrain-inertial-driver"
 ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES:remove = "osrf-testing-tools-cpp"
 ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES:remove = "suitesparse-spqr suitesparse-colamd suitesparse-cholmod ceres-solver cartographer cartographer-ros"
+# fix error  Package 'rcutils' exports library 'dl' which couldn't be found
+# ROS_SUPERFLORE_GENERATED_WORLD_PACKAGES:remove = "rosidl-typesupport-c rosidl-runtime-cpp rcpputils rmw-implementation rmw-fastrtps-shared-cpp rmw-fastrtps-dynamic-cpp rmw-fastrtps-cpp rmw-cyclonedds-cpp rmw-dds-common"

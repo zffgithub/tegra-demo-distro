@@ -8,6 +8,7 @@ github_repos = [
     'https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_argus_camera',
     'https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_image_pipeline.git',
     'https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_visual_slam.git',
+    'https://github.com/zff-ros/isaac_ros_nitros_type.git',
 ]
 
 def cmd_process(cmd, timeout=600, poll_code=0):

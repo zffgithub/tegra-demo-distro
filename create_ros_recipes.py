@@ -21,19 +21,47 @@ def cmd_process(cmd, timeout=600, poll_code=0):
     else:
         return False
 
-rootpath = '/Users/yikunzhu/wwwroot/zff-tegra-demo-distro-kirkstone/tmpdir'
-
+rootpath = 'xxx'
+oauth_token = 'xxxxx'
 # https://docs.github.com/en/rest
 # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-an-organization-repository
 def create_github_empty_repo(repo_name):
-    pass
+    cmd = f"""
+curl -L \
+  -X POST \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer {oauth_token}"\
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  https://api.github.com/orgs/ORG/repos \
+  -d '{"name":"{repo_name}","description":"No description.","homepage":"https://github.com","private":false,"has_issues":true,"has_projects":true,"has_wiki":true}'
+    """
+    res = cmd_process(cmd=cmd)
+    print(res)
+
+def push_github_code(repo_path):
+    repo_name = repo_path.split('/')[-1]
+    cmd = f"""
+    cd {repo_path};
+    git init;
+    git remote add origin git@github.com:zff-ros/{repo_name}.git;
+    git add .;
+    git commit -m "Initial commit";
+    git push -u origin main;
+    """
+    res = cmd_process(cmd=cmd)
+    print(res)
 
 def create_github_repos():
     for github_repo in github_repos:
         repo_name = github_repo.split('/')[-1].replace('.git', '')
-        print(repo_name)
         for child_repo in os.listdir(f"{rootpath}/{repo_name}"):
-            pass
+            if 'isaac_ros' not in child_repo:
+                continue
+            print(f"create_github_empty_repo: {child_repo}")
+            create_github_empty_repo(child_repo)
+            child_repo_path = f"{rootpath}/{repo_name}/{child_repo}"
+            push_github_code(child_repo_path)
+
 
 def format_xml_item(key, d):
     item_list = d.get(key, [])
@@ -128,8 +156,22 @@ inherit ros_${{ROS_BUILD_TYPE}}
     with open(target_path, 'w') as f:
         f.write(template)
 
+
+def create_all_recipes():
+    for github_repo in github_repos:
+        repo_name = github_repo.split('/')[-1].replace('.git', '')
+        for child_repo in os.listdir(f"{rootpath}/{repo_name}"):
+            if 'isaac_ros' not in child_repo:
+                continue
+            print(f"create_recipe: {child_repo}")
+            source_path = f"{rootpath}/{repo_name}/{child_repo}/package.xml"
+            target_path = f"{rootpath}/generated-recipes/{repo_name.replace('_','-')}/{child_repo.replace('_','-')}_%.bb"
+            generate_ros_recipe(source_path, target_path)
+
+
 if __name__ == "__main__":
     # create_github_repos()
-    source_path = '/Users/yikunzhu/wwwroot/zff-tegra-demo-distro-kirkstone/tmpdir/isaac_ros_argus_camera/isaac_ros_argus_camera/package.xml'
-    target_path = './test.bb'
-    generate_ros_recipe(source_path, target_path)
+    # source_path = 
+    # target_path = 
+    # generate_ros_recipe(source_path, target_path)
+    create_github_repos()

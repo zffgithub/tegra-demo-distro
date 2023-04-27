@@ -70,9 +70,9 @@ def format_xml_item(key, item_list):
         item_list = [item_list]
     item_str = f'wrong item: {item_list}'
     if key in ['buildtool_depend', 'buildtool_export_depend']:
-        item_str = ' \\\n\t'.join([f'{item}-native'.replace('_', '-') for item in item_list])
+        item_str = ' \\\n\t'.join([f'{item}-native'.replace('_', '-') for item in item_list]) + " \\"
     elif key in ['build_depend', 'depend', 'export_depend', 'test_depend']:
-        item_str = ' \\\n\t'.join([item.replace('_', '-') for item in item_list])
+        item_str = ' \\\n\t'.join([item.replace('_', '-') for item in item_list]) + " \\"
     return item_str
 
 def generate_ros_recipe(source_path, target_path):

@@ -56,8 +56,8 @@ def push_github_code(repo_path):
 def get_last_srcrev(repo_path):
     repo_name = repo_path.split('/')[-1]
     cmd = f"""
-    cd {repo_path};
-    git rev-parse HEAD;
+    cd {repo_path}/..;
+    git rev-parse HEAD:{repo_name};
     """
     res = cmd_process(cmd=cmd)
     return res

@@ -26,3 +26,7 @@
 	path = repos/meta-python2
 	url = https://github.com/YoeDistro/meta-python2.git
 	branch = kirkstone
+[submodule "repos/meta-myros"]
+	path = repos/meta-myros
+	url = https://github.com/zffgithub/meta-ros
+	branch = main

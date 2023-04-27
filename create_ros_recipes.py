@@ -27,13 +27,13 @@ oauth_token = 'xxxxx'
 # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-an-organization-repository
 def create_github_empty_repo(repo_name):
     cmd = f"""
-curl -L \
-  -X POST \
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer {oauth_token}"\
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  https://api.github.com/orgs/ORG/repos \
-  -d '{"name":"{repo_name}","description":"No description.","homepage":"https://github.com","private":false,"has_issues":true,"has_projects":true,"has_wiki":true}'
+curl -L \\
+  -X POST \\
+  -H "Accept: application/vnd.github+json" \\
+  -H "Authorization: Bearer {oauth_token}"\\
+  -H "X-GitHub-Api-Version: 2022-11-28" \\
+  https://api.github.com/orgs/zff-ros/repos \\
+  -d '{{"name":"{repo_name}","description":"No description.","homepage":"https://github.com","private":false,"has_issues":true,"has_projects":true,"has_wiki":true}}'
     """
     res = cmd_process(cmd=cmd)
     print(res)
@@ -43,9 +43,10 @@ def push_github_code(repo_path):
     cmd = f"""
     cd {repo_path};
     git init;
-    git remote add origin git@github.com:zff-ros/{repo_name}.git;
+    git remote add origin https://github.com/zff-ros/{repo_name}.git;
     git add .;
     git commit -m "Initial commit";
+    git branch -M main
     git push -u origin main;
     """
     res = cmd_process(cmd=cmd)

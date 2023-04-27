@@ -1,5 +1,5 @@
 import subprocess
-import os
+import os, sys
 import xmltodict
 
 github_repos = [
@@ -21,7 +21,7 @@ def cmd_process(cmd, timeout=600, poll_code=0):
     else:
         return False
 
-rootpath = 'xxx'
+rootpath = f'{sys.path[0]}/tmpdir'
 oauth_token = 'xxxxx'
 # https://docs.github.com/en/rest
 # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-an-organization-repository
@@ -166,8 +166,13 @@ def create_all_recipes():
                 continue
             print(f"create_recipe: {child_repo}")
             source_path = f"{rootpath}/{repo_name}/{child_repo}/package.xml"
+            cmd_process(cmd=f"mkdir -p {rootpath}/generated-recipes/{repo_name.replace('_','-')}")
             target_path = f"{rootpath}/generated-recipes/{repo_name.replace('_','-')}/{child_repo.replace('_','-')}_%.bb"
-            generate_ros_recipe(source_path, target_path)
+            try:
+                generate_ros_recipe(source_path, target_path)
+            except Exception as e:
+                print(e)
+                print(f'[ERROR]>>>>>>>{source_path}')
 
 
 if __name__ == "__main__":
@@ -175,4 +180,4 @@ if __name__ == "__main__":
     # source_path = 
     # target_path = 
     # generate_ros_recipe(source_path, target_path)
-    create_github_repos()
+    create_all_recipes()

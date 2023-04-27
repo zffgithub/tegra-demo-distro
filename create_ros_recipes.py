@@ -65,13 +65,14 @@ def create_github_repos():
             push_github_code(child_repo_path)
 
 
-def format_xml_item(key, d):
-    item_list = d.get(key, [])
+def format_xml_item(key, item_list):
+    if not isinstance(item_list, list):
+        item_list = [item_list]
     item_str = f'wrong item: {item_list}'
     if key in ['buildtool_depend', 'buildtool_export_depend']:
-        item_str = '\\'.join([f'{item}-native'.replace('_', '-') for item in item_list])
+        item_str = ' \\\n\t'.join([f'{item}-native'.replace('_', '-') for item in item_list])
     elif key in ['build_depend', 'depend', 'export_depend', 'test_depend']:
-        item_str = '\\'.join([item.replace('_', '-') for item in item_list])
+        item_str = ' \\\n\t'.join([item.replace('_', '-') for item in item_list])
     return item_str
 
 def generate_ros_recipe(source_path, target_path):
@@ -79,12 +80,12 @@ def generate_ros_recipe(source_path, target_path):
         package_dict = xmltodict.parse(xml_file.read())
     data_dict = package_dict.get('package', {})
 
-    buildtool_depend = format_xml_item('buildtool_depend', data_dict)
-    buildtool_export_depend = format_xml_item('buildtool_export_depend', data_dict)
-    build_depend = format_xml_item('build_depend', data_dict)
-    depend = format_xml_item('depend', data_dict)
+    buildtool_depend = format_xml_item('buildtool_depend', data_dict.get('buildtool_depend', []))
+    buildtool_export_depend = format_xml_item('buildtool_export_depend', data_dict.get('buildtool_export_depend', []))
+    build_depend = format_xml_item('build_depend', data_dict.get('build_depend', []))
+    depend = format_xml_item('depend', data_dict.get('depend', []))
     # export_depend = '\\'.join(data_dict.get('export_depend', []))
-    test_depend = format_xml_item('test_depend', data_dict)
+    test_depend = format_xml_item('test_depend', data_dict.get('test_depend', []))
 
     license_result = cmd_process(f"grep -n '<license>' {source_path}")
     if license_result:

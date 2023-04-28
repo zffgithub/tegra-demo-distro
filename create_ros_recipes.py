@@ -106,7 +106,7 @@ def generate_ros_recipe(source_path, target_path, **kwargs):
 
     buildtool_depend = format_xml_item('buildtool_depend', data_dict.get('buildtool_depend', []))
     buildtool_export_depend = format_xml_item('buildtool_export_depend', data_dict.get('buildtool_export_depend', []))
-    build_depend = format_xml_item('build_depend', data_dict.get('build_depend', []))
+    exec_depend = format_xml_item('exec_depend', data_dict.get('exec_depend', []))
     depend = format_xml_item('depend', data_dict.get('depend', []))
     # export_depend = '\\'.join(data_dict.get('export_depend', []))
     test_depend = format_xml_item('test_depend', data_dict.get('test_depend', []))
@@ -142,7 +142,7 @@ ROS_CN = "{data_dict.get('name', 'no name')}"
 ROS_BPN = "{data_dict.get('name', 'no name')}"
 
 ROS_BUILD_DEPENDS = " \\
-    {build_depend}
+    {depend}
 "
 
 ROS_BUILDTOOL_DEPENDS = " \\
@@ -158,7 +158,7 @@ ROS_BUILDTOOL_EXPORT_DEPENDS = " \\
 "
 
 ROS_EXEC_DEPENDS = " \\
-    {depend}
+    {exec_depend}
 "
 
 # Currently informational only -- see http://www.ros.org/reps/rep-0149.html#dependency-tags.

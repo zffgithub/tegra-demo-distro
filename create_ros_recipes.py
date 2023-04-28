@@ -71,7 +71,7 @@ def get_package_md5(license):
     elif 'MIT' == license:
         license_md5 ='58e54c03ca7f821dd3967e2a2cd1596e'
     elif 'NVIDIA' in license:
-        license_md5 ='ec84a5d6851cd927cc8a52a41eeafa53'
+        license_md5 ='6714ec9a6151f2d52c471e68df0580ff'
     else:
         license_md5 =f'Unknown License {license}'
     return license_md5

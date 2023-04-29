@@ -196,7 +196,7 @@ def create_all_recipes():
             print(f"create_recipe: {child_repo}")
             source_path = f"{rootpath}/{repo_name}/{child_repo}/package.xml"
             cmd_process(cmd=f"mkdir -p {rootpath}/generated-recipes/{repo_name.replace('_','-')}")
-            target_path = f"{rootpath}/generated-recipes/{repo_name.replace('_','-')}/{child_repo.replace('_','-')}_%.bb"
+            target_path = f"{rootpath}/generated-recipes/{repo_name.replace('_','-')}/{child_repo.replace('_','-')}_1.0.bb"
             child_repo_path = f"{rootpath}/{repo_name}/{child_repo}"
 
             srcrev = get_last_srcrev(child_repo_path)

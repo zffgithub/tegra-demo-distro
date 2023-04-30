@@ -13,3 +13,7 @@ ROS_BUILD_DEPENDS += " \
     rosidl-typesupport-c \  
     libnvvpi2 \ 
 "
+
+VPI_PREFIX = "/opt/nvidia/vpi2"
+EXTRA_OECMAKE += "-DCMAKE_INSTALL_PREFIX:PATH=${VPI_PREFIX}"
+FILES:${PN} = "${VPI_PREFIX}"

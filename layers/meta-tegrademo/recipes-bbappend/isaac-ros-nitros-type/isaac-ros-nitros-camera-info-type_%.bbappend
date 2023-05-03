@@ -1,0 +1,12 @@
+SRCREV = "1879157df45f5e38c61362643f6a0ca79fba656c"
+
+ROS_BUILDTOOL_DEPENDS += " \
+    ament-cmake-auto-native \
+"
+
+# GXF
+EXTRA_OECMAKE += "-DCMAKE_MODULE_PATH:PATH=${STAGING_DIR_HOST}/usr/share/isaac_ros_gxf/cmake/modules"
+
+# NVTX
+EXTRA_OECMAKE += "-DCUDA_TOOLKIT_ROOT_DIR=${STAGING_DIR_HOST}/usr/local/cuda-11.4"
+EXTRA_OECMAKE += "-DSTAGING_DIR_HOST=${STAGING_DIR_HOST}"

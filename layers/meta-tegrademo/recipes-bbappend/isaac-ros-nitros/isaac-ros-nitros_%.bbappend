@@ -36,17 +36,15 @@ ROS_BUILD_DEPENDS += " \
 
 SRCREV = "b3ea5c3221b2013da74787077354e4bfb3ab641e"
 
-# EXTRA_OECMAKE += "-DCMAKE_MODULE_PATH:PATH=${STAGING_DIR_HOST}/usr/share/isaac_ros_gxf/cmake/modules;${STAGING_DIR_HOST}/usr/lib/cmake/yaml-cpp"
-
+# vpi2
 VPI_PREFIX = "/opt/nvidia/vpi2"
 FILES:${PN} += "${VPI_PREFIX}"
 EXTRA_OECMAKE += "-Dvpi_DIR=${STAGING_DIR_HOST}${VPI_PREFIX}/lib/aarch64-linux-gnu/cmake/vpi"
 
-# EXTRA_OECMAKE += "-DGXF_DIR=${STAGING_DIR_HOST}/usr/share/isaac_ros_gxf/cmake/modules"
-
+# GXF
 EXTRA_OECMAKE += "-DCMAKE_MODULE_PATH:PATH=${STAGING_DIR_HOST}/usr/share/isaac_ros_gxf/cmake/modules"
-# EXTRA_OECMAKE += "-DYamlCpp_DIR=${STAGING_DIR_HOST}/usr/lib/cmake/yaml-cpp"
 
+# NVTX
 EXTRA_OECMAKE += "-DCUDA_TOOLKIT_ROOT_DIR=${STAGING_DIR_HOST}/usr/local/cuda-11.4"
 EXTRA_OECMAKE += "-DSTAGING_DIR_HOST=${STAGING_DIR_HOST}"
 

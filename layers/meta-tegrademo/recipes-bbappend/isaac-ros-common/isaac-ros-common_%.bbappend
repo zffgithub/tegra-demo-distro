@@ -15,5 +15,10 @@ ROS_BUILD_DEPENDS += " \
 "
 
 VPI_PREFIX = "/opt/nvidia/vpi2"
-EXTRA_OECMAKE += "-DCMAKE_INSTALL_PREFIX:PATH=${VPI_PREFIX}"
-FILES:${PN} = "${VPI_PREFIX}"
+FILES:${PN} += "${VPI_PREFIX}"
+EXTRA_OECMAKE += "-Dvpi_DIR=${STAGING_DIR_HOST}${VPI_PREFIX}/lib/aarch64-linux-gnu/cmake/vpi"
+
+# do_install:append() {
+#     install -m 0755 -d ${D}${libdir}/vpi2 
+#     install -m 0755 ${S}/opt/nvidia/vpi2 ${D}${libdir}/vpi2
+# }

@@ -2,4 +2,6 @@ ROS_BUILDTOOL_DEPENDS += " \
     ament-cmake-auto-native \
 "
 
-SRCREV = "9efdb255713d758a784ec719e93bfe22bc07352d"
+SRCREV = "5fdbfe3b94c41f7521c3bbe037db51c22b2d886e"
+
+EXTRA_OECMAKE += "-DARCHITECTURE=aarch64"

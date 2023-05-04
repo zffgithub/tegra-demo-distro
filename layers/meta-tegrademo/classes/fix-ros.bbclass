@@ -15,9 +15,10 @@ ROS_BUILDTOOL_DEPENDS += " \
 "
 
 do_configure:prepend() {
+    find ${S} -name CMakeLists.txt | xargs \
     sed -e "s#include(YamlCpp)#find_package(yaml-cpp REQUIRED)#g" \
         -e 's#link_libraries("nvToolsExt")#include_directories("${STAGING_DIR_HOST}/usr/local/cuda-11.4/include")\n    include_directories("${STAGING_DIR_HOST}/usr/local/cuda-11.4/include/nvtx3")\n    link_directories("${STAGING_DIR_HOST}/usr/local/cuda-11.4/lib/")#g' \
-        -i ${S}/CMakeLists.txt
+        -i # ${S}/CMakeLists.txt
 }
 
 # GXF

@@ -8,7 +8,7 @@ do_patch(){
     :
 }
 do_compile:prepend(){
-    patch -N -i ${WORKDIR}/libcudacxx_aarch64_cuda_11_4.diff ${STAGING_DIR_HOST}/usr/local/cuda-11.4/include/cuda/std/detail/libcxx/include/cmath
+    patch -t -i ${WORKDIR}/libcudacxx_aarch64_cuda_11_4.diff ${STAGING_DIR_HOST}/usr/local/cuda-11.4/include/cuda/std/detail/libcxx/include/cmath
 }
 
 # do_patch:append() {

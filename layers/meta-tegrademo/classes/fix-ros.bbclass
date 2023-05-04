@@ -1,3 +1,5 @@
+inherit cuda
+
 ROS_BUILDTOOL_DEPENDS += " \
     ament-cmake-auto-native \
 "
@@ -24,3 +26,8 @@ INSANE_SKIP:${PN} += "staticdev"
 EXTRA_OECMAKE += "\
     -DCMAKE_SKIP_RPATH=ON \
 "
+
+# vpi2
+VPI_PREFIX = "/opt/nvidia/vpi2"
+FILES:${PN} += "${VPI_PREFIX}"
+EXTRA_OECMAKE += "-Dvpi_DIR=${STAGING_DIR_HOST}${VPI_PREFIX}/lib/aarch64-linux-gnu/cmake/vpi"

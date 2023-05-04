@@ -34,11 +34,5 @@ ROS_BUILD_DEPENDS += " \
     cuda-nvtx \
 "
 
-SRCREV = "b3ea5c3221b2013da74787077354e4bfb3ab641e"
-
-# vpi2
-VPI_PREFIX = "/opt/nvidia/vpi2"
-FILES:${PN} += "${VPI_PREFIX}"
-EXTRA_OECMAKE += "-Dvpi_DIR=${STAGING_DIR_HOST}${VPI_PREFIX}/lib/aarch64-linux-gnu/cmake/vpi"
 
 inherit fix-ros

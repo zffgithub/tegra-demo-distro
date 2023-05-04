@@ -1,10 +1,10 @@
 inherit cuda
 
 # https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_nitros/issues/19
-FILESEXTRAPATHS:prepend := "${COREBASE}/meta-tegrademo/files:"
-SRC_URI += "\
-    file://libcudacxx_aarch64_cuda_11_4.diff \
-"
+# FILESEXTRAPATHS:prepend := "${COREBASE}/meta-tegrademo/files:"
+# SRC_URI += "\
+#     file://libcudacxx_aarch64_cuda_11_4.diff \
+# "
 do_compile:prepend(){
     patch -t -i ${COREBASE}/meta-tegrademo/files/libcudacxx_aarch64_cuda_11_4.diff ${STAGING_DIR_HOST}/usr/local/cuda-11.4/include/cuda/std/detail/libcxx/include/cmath
 }

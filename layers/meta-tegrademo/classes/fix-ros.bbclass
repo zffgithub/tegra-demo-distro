@@ -23,6 +23,7 @@ do_configure:prepend() {
 
 # GXF
 EXTRA_OECMAKE += "-DCMAKE_MODULE_PATH:PATH=${STAGING_DIR_HOST}/usr/share/isaac_ros_gxf/cmake/modules"
+EXTRA_OECMAKE += "-Disaac_ros_gxf_DIR=${STAGING_DIR_HOST}/usr/share/isaac_ros_gxf/cmake"
 
 # NVTX
 EXTRA_OECMAKE += "-DCUDA_TOOLKIT_ROOT_DIR=${STAGING_DIR_HOST}/usr/local/cuda-11.4"

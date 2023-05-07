@@ -85,7 +85,7 @@ def prepend_comments(comments, json_manifest):
         manifest.write(comments + json_contents)
 
 # Read existing JSON manifest
-with open('python38-manifest.json') as manifest:
+with open('python3-manifest.json') as manifest:
     # The JSON format doesn't allow comments so we hack the call to keep the comments using a marker
     manifest_str =  manifest.read()
     json_start = manifest_str.find('# EOC') + 6 # EOC + \n
@@ -416,11 +416,11 @@ for pypkg in new_manifest:
     new_manifest[pypkg]['rdepends'].sort()
 
 # Create the manifest from the data structure that was built
-with open('python38-manifest.json.new','w') as outfile:
+with open('python3-manifest.json.new','w') as outfile:
     json.dump(new_manifest,outfile, indent=4)
     outfile.write('\n')
 
-prepend_comments(comments,'python38-manifest.json.new')
+prepend_comments(comments,'python3-manifest.json.new')
 
 if (repeated):
     error_msg = '\n\nERROR:\n'

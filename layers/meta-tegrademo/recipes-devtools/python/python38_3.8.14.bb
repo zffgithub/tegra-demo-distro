@@ -38,7 +38,7 @@ SRC_URI = "http://www.python.org/ftp/python/${PV}/Python-${PV}.tar.xz \
            file://CVE-2022-37454.patch \
            "
 
-SRC_URI_append_class-native = " \
+SRC_URI:append:class-native = " \
            file://0001-distutils-sysconfig-append-STAGING_LIBDIR-python-sys.patch \
            file://12-distutils-prefix-is-inside-staging-area.patch \
            file://0001-Don-t-search-system-for-headers-libraries.patch \
@@ -73,17 +73,17 @@ inherit autotools pkgconfig qemu ptest multilib_header update-alternatives
 
 MULTILIB_SUFFIX = "${@d.getVar('base_libdir',1).split('/')[-1]}"
 
-ALTERNATIVE_${PN}-dev = "python3-config"
+ALTERNATIVE:${PN}-dev = "python3-config"
 ALTERNATIVE_LINK_NAME[python3-config] = "${bindir}/python${PYTHON_MAJMIN}-config"
 ALTERNATIVE_TARGET[python3-config] = "${bindir}/python${PYTHON_MAJMIN}-config-${MULTILIB_SUFFIX}"
 
 
 DEPENDS = "bzip2-replacement-native libffi bzip2 openssl sqlite3 zlib virtual/libintl xz virtual/crypt util-linux libtirpc libnsl2 autoconf-archive"
-DEPENDS_append_class-target = " python3-native"
-DEPENDS_append_class-nativesdk = " python3-native"
+DEPENDS:append:class-target = " python3-native"
+DEPENDS:append:class-nativesdk = " python3-native"
 
 EXTRA_OECONF = " --without-ensurepip --enable-shared"
-EXTRA_OECONF_append_class-native = " --bindir=${bindir}/${PN}"
+EXTRA_OECONF:append:class-native = " --bindir=${bindir}/${PN}"
 
 export CROSSPYTHONPATH="${STAGING_LIBDIR_NATIVE}/python${PYTHON_MAJMIN}/lib-dynload/"
 
@@ -103,9 +103,9 @@ python() {
         d.setVar('PACKAGECONFIG_PGO', '')
 }
 
-PACKAGECONFIG_class-target ??= "readline ${PACKAGECONFIG_PGO} gdbm"
-PACKAGECONFIG_class-native ??= "readline gdbm"
-PACKAGECONFIG_class-nativesdk ??= "readline gdbm"
+PACKAGECONFIG:class-target ??= "readline ${PACKAGECONFIG_PGO} gdbm"
+PACKAGECONFIG:class-native ??= "readline gdbm"
+PACKAGECONFIG:class-nativesdk ??= "readline gdbm"
 PACKAGECONFIG[readline] = ",,readline"
 # Use profile guided optimisation by running PyBench inside qemu-user
 PACKAGECONFIG[pgo] = "--enable-optimizations,,qemu-native"
@@ -318,48 +318,48 @@ do_create_manifest() {
 addtask do_create_manifest after do_patch do_prepare_recipe_sysroot
 
 # manual dependency additions
-RRECOMMENDS_${PN}-core_append_class-nativesdk = " nativesdk-python3-modules"
-RRECOMMENDS_${PN}-crypt_append_class-target = " openssl ca-certificates"
-RRECOMMENDS_${PN}-crypt_append_class-nativesdk = " openssl ca-certificates"
+RRECOMMENDS:${PN}-core:append:class-nativesdk = " nativesdk-python3-modules"
+RRECOMMENDS:${PN}-crypt:append:class-target = " openssl ca-certificates"
+RRECOMMENDS:${PN}-crypt:append:class-nativesdk = " openssl ca-certificates"
 
 # For historical reasons PN is empty and provided by python3-modules
 FILES_${PN} = ""
-RPROVIDES_${PN}-modules = "${PN}"
+RPROVIDES:${PN}-modules = "${PN}"
 
-FILES_${PN}-pydoc += "${bindir}/pydoc${PYTHON_MAJMIN} ${bindir}/pydoc3"
-FILES_${PN}-idle += "${bindir}/idle3 ${bindir}/idle${PYTHON_MAJMIN}"
+FILES:${PN}-pydoc += "${bindir}/pydoc${PYTHON_MAJMIN} ${bindir}/pydoc3"
+FILES:${PN}-idle += "${bindir}/idle3 ${bindir}/idle${PYTHON_MAJMIN}"
 
 # provide python-pyvenv from python3-venv
-RPROVIDES_${PN}-venv += "python3-pyvenv"
+RPROVIDES:${PN}-venv += "python3-pyvenv"
 
 # package libpython3
 PACKAGES =+ "libpython3 libpython3-staticdev"
-FILES_libpython3 = "${libdir}/libpython*.so.*"
-FILES_libpython3-staticdev += "${libdir}/python${PYTHON_MAJMIN}/config-${PYTHON_MAJMIN}-*/libpython${PYTHON_MAJMIN}.a"
-INSANE_SKIP_${PN}-dev += "dev-elf"
-INSANE_SKIP_${PN}-ptest += "dev-deps"
+FILES:libpython3 = "${libdir}/libpython*.so.*"
+FILES:libpython3-staticdev += "${libdir}/python${PYTHON_MAJMIN}/config-${PYTHON_MAJMIN}-*/libpython${PYTHON_MAJMIN}.a"
+INSANE_SKIP:${PN}-dev += "dev-elf"
+INSANE_SKIP:${PN}-ptest += "dev-deps"
 
 # catch all the rest (unsorted)
 PACKAGES += "${PN}-misc"
-RDEPENDS_${PN}-misc += "python3-core python3-email python3-codecs python3-pydoc python3-pickle python3-audio"
-RDEPENDS_${PN}-modules_append_class-target = " python3-misc"
-RDEPENDS_${PN}-modules_append_class-nativesdk = " python3-misc"
+RDEPENDS:${PN}-misc += "python3-core python3-email python3-codecs python3-pydoc python3-pickle python3-audio"
+RDEPENDS:${PN}-modules:append:class-target = " python3-misc"
+RDEPENDS:${PN}-modules:append:class-nativesdk = " python3-misc"
 FILES_${PN}-misc = "${libdir}/python${PYTHON_MAJMIN} ${libdir}/python${PYTHON_MAJMIN}/lib-dynload"
 
 # catch manpage
 PACKAGES += "${PN}-man"
-FILES_${PN}-man = "${datadir}/man"
+FILES:${PN}-man = "${datadir}/man"
 
 # See https://bugs.python.org/issue18748 and https://bugs.python.org/issue37395
-RDEPENDS_libpython3_append_libc-glibc = " libgcc"
-RDEPENDS_${PN}-ctypes_append_libc-glibc = " ${MLPREFIX}ldconfig"
-RDEPENDS_${PN}-ptest = "${PN}-modules ${PN}-tests ${PN}-dev unzip bzip2 libgcc tzdata-europe coreutils sed"
-RDEPENDS_${PN}-ptest_append_libc-glibc = " locale-base-tr-tr.iso-8859-9"
-RDEPENDS_${PN}-tkinter += "${@bb.utils.contains('PACKAGECONFIG', 'tk', 'tk tk-lib', '', d)}"
-RDEPENDS_${PN}-dev = ""
+RDEPENDS:libpython3:append:libc-glibc = " libgcc"
+RDEPENDS:${PN}-ctypes:append:libc-glibc = " ${MLPREFIX}ldconfig"
+RDEPENDS:${PN}-ptest = "${PN}-modules ${PN}-tests ${PN}-dev unzip bzip2 libgcc tzdata-europe coreutils sed"
+RDEPENDS:${PN}-ptest:append:libc-glibc = " locale-base-tr-tr.iso-8859-9"
+RDEPENDS:${PN}-tkinter += "${@bb.utils.contains('PACKAGECONFIG', 'tk', 'tk tk-lib', '', d)}"
+RDEPENDS:${PN}-dev = ""
 
-RDEPENDS_${PN}-tests_append_class-target = " bash"
-RDEPENDS_${PN}-tests_append_class-nativesdk = " bash"
+RDEPENDS:${PN}-tests:append:class-target = " bash"
+RDEPENDS:${PN}-tests:append:class-nativesdk = " bash"
 
 # Python's tests contain large numbers of files we don't need in the recipe sysroots
 SYSROOT_PREPROCESS_FUNCS += " py3_sysroot_cleanup"

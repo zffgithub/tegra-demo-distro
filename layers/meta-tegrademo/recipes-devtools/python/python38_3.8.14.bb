@@ -112,7 +112,7 @@ PACKAGECONFIG[pgo] = "--enable-optimizations,,qemu-native"
 PACKAGECONFIG[tk] = ",,tk"
 PACKAGECONFIG[gdbm] = ",,gdbm"
 
-do_configure_prepend () {
+do_configure:prepend () {
     mkdir -p ${B}/Modules
     cat > ${B}/Modules/Setup.local << EOF
 *disabled*
@@ -121,7 +121,7 @@ ${@bb.utils.contains('PACKAGECONFIG', 'readline', '', 'readline', d)}
 EOF
 }
 
-CPPFLAGS_append = " -I${STAGING_INCDIR}/ncursesw -I${STAGING_INCDIR}/uuid"
+CPPFLAGS:append = " -I${STAGING_INCDIR}/ncursesw -I${STAGING_INCDIR}/uuid"
 
 EXTRA_OEMAKE = '\
   STAGING_LIBDIR=${STAGING_LIBDIR} \
@@ -129,7 +129,7 @@ EXTRA_OEMAKE = '\
   LIB=${baselib} \
 '
 
-do_compile_prepend_class-target() {
+do_compile:prepend:class-target() {
        if ${@bb.utils.contains('PACKAGECONFIG', 'pgo', 'true', 'false', d)}; then
                 qemu_binary="${@qemu_wrapper_cmdline(d, '${STAGING_DIR_TARGET}', ['${B}', '${STAGING_DIR_TARGET}/${base_libdir}'])}"
                 cat >pgo-wrapper <<EOF
@@ -141,15 +141,15 @@ EOF
         fi
 }
 
-do_install_prepend() {
+do_install:prepend() {
         ${WORKDIR}/check_build_completeness.py ${T}/log.do_compile
 }
 
-do_install_append_class-target() {
+do_install:append:class-target() {
         oe_multilib_header python${PYTHON_MAJMIN}/pyconfig.h
 }
 
-do_install_append_class-native() {
+do_install:append:class-native() {
         # Make sure we use /usr/bin/env python
         for PYTHSCRIPT in `grep -rIl ${bindir}/${PN}/python ${D}${bindir}/${PN}`; do
                 sed -i -e '1s|^#!.*|#!/usr/bin/env python3|' $PYTHSCRIPT
@@ -161,7 +161,7 @@ do_install_append_class-native() {
         ln -s python3-native/python3 ${D}${bindir}/nativepython3
 }
 
-do_install_append() {
+do_install:append() {
         mkdir -p ${D}${libdir}/python-sysconfigdata
         sysconfigfile=`find ${D} -name _sysconfig*.py`
         cp $sysconfigfile ${D}${libdir}/python-sysconfigdata/_sysconfigdata.py
@@ -175,7 +175,7 @@ do_install_append() {
                 ${D}${libdir}/python-sysconfigdata/_sysconfigdata.py
 }
 
-do_install_append_class-nativesdk () {
+do_install:append:class-nativesdk () {
     create_wrapper ${D}${bindir}/python${PYTHON_MAJMIN} TERMINFO_DIRS='${sysconfdir}/terminfo:/etc/terminfo:/usr/share/terminfo:/usr/share/misc/terminfo:/lib/terminfo' PYTHONNOUSERSITE='1'
 }
 
@@ -239,7 +239,7 @@ python(){
     # First set RPROVIDES for -native case
     # Hardcoded since it cant be python3-native-foo, should be python3-foo-native
     pn = 'python3'
-    rprovides = d.getVar('RPROVIDES').split()
+    rprovides = (d.getVar('RPROVIDES') or "").split()
 
     # ${PN}-misc-native is not in the manifest
     rprovides.append(pn + '-misc-native')
@@ -249,7 +249,7 @@ python(){
         if pypackage not in rprovides:
               rprovides.append(pypackage)
 
-    d.setVar('RPROVIDES_class-native', ' '.join(rprovides))
+    d.setVar('RPROVIDES:class-native', ' '.join(rprovides))
 
     # Then work on the target
     include_pycs = d.getVar('INCLUDE_PYCS')
@@ -267,33 +267,36 @@ python(){
             newpackages.append(pypackage)
 
         # "Build" python's manifest FILES, RDEPENDS and SUMMARY
-        d.setVar('FILES_' + pypackage, '')
+        d.setVar('FILES:' + pypackage, '')
         for value in python_manifest[key]['files']:
-            d.appendVar('FILES_' + pypackage, ' ' + value)
+            d.appendVar('FILES:' + pypackage, ' ' + value)
 
         # Add cached files
         if include_pycs == '1':
             for value in python_manifest[key]['cached']:
-                    d.appendVar('FILES_' + pypackage, ' ' + value)
+                    d.appendVar('FILES:' + pypackage, ' ' + value)
 
         for value in python_manifest[key]['rdepends']:
             # Make it work with or without $PN
             if '${PN}' in value:
                 value=value.split('-', 1)[1]
-            d.appendVar('RDEPENDS_' + pypackage, ' ' + pn + '-' + value)
+            d.appendVar('RDEPENDS:' + pypackage, ' ' + pn + '-' + value)
 
         for value in python_manifest[key].get('rrecommends', ()):
             if '${PN}' in value:
                 value=value.split('-', 1)[1]
-            d.appendVar('RRECOMMENDS_' + pypackage, ' ' + pn + '-' + value)
+            d.appendVar('RRECOMMENDS:' + pypackage, ' ' + pn + '-' + value)
 
-        d.setVar('SUMMARY_' + pypackage, python_manifest[key]['summary'])
+        d.setVar('SUMMARY:' + pypackage, python_manifest[key]['summary'])
 
     # Prepending so to avoid python-misc getting everything
     packages = newpackages + packages
     d.setVar('PACKAGES', ' '.join(packages))
-    d.setVar('ALLOW_EMPTY_${PN}-modules', '1')
-    d.setVar('ALLOW_EMPTY_${PN}-pkgutil', '1')
+    d.setVar('ALLOW_EMPTY:${PN}-modules', '1')
+    d.setVar('ALLOW_EMPTY:${PN}-pkgutil', '1')
+
+    if "pgo" in d.getVar("PACKAGECONFIG").split() and not bb.utils.contains('MACHINE_FEATURES', 'qemu-usermode', True, False, d):
+        bb.fatal("pgo cannot be enabled as there is no qemu-usermode support for this architecture/machine")
 }
 
 # Files needed to create a new manifest

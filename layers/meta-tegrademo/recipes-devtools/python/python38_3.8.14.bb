@@ -10,7 +10,7 @@ SRC_URI = "http://www.python.org/ftp/python/${PV}/Python-${PV}.tar.xz \
            file://run-ptest \
            file://create_manifest3.py \
            file://get_module_deps3.py \
-           file://python38-manifest.json \
+           file://python3-manifest.json \
            file://check_build_completeness.py \
            file://cgi_py.patch \
            file://0001-Do-not-add-usr-lib-termcap-to-linker-flags-to-avoid-.patch \
@@ -53,15 +53,15 @@ UPSTREAM_CHECK_REGEX = "[Pp]ython-(?P<pver>\d+(\.\d+)+).tar"
 CVE_PRODUCT = "python"
 
 # Upstream consider this expected behaviour
-CVE_CHECK_WHITELIST += "CVE-2007-4559"
+CVE_CHECK_IGNORE += "CVE-2007-4559"
 # This is not exploitable when glibc has CVE-2016-10739 fixed.
-CVE_CHECK_WHITELIST += "CVE-2019-18348"
+CVE_CHECK_IGNORE += "CVE-2019-18348"
 
 # This is windows only issue.
-CVE_CHECK_WHITELIST += "CVE-2020-15523 CVE-2022-26488"
+CVE_CHECK_IGNORE += "CVE-2020-15523 CVE-2022-26488"
 # The mailcap module is insecure by design, so this can't be fixed in a meaningful way.
 # The module will be removed in the future and flaws documented.
-CVE_CHECK_WHITELIST += "CVE-2015-20107"
+CVE_CHECK_IGNORE += "CVE-2015-20107"
 
 PYTHON_MAJMIN = "3.8"
 
@@ -224,7 +224,7 @@ INCLUDE_PYCS ?= "1"
 python(){
     import collections, json
 
-    filename = os.path.join(d.getVar('THISDIR'), 'python3', 'python3-manifest.json')
+    filename = os.path.join(d.getVar('THISDIR'), 'python38', 'python3-manifest.json')
     # This python changes the datastore based on the contents of a file, so mark
     # that dependency.
     bb.parse.mark_dependency(d, filename)
@@ -313,7 +313,7 @@ do_create_manifest() {
     cd ${WORKDIR}
     # This needs to be executed by python-native and NOT by HOST's python
     nativepython3 create_manifest3.py ${PYTHON_MAJMIN}
-    cp python3-manifest.json.new ${THISDIR}/python3/python3-manifest.json
+    cp python3-manifest.json.new ${THISDIR}/python38/python3-manifest.json
 }
 
 # bitbake python -c create_manifest

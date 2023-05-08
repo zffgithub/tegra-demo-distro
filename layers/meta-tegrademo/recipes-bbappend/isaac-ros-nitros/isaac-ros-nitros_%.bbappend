@@ -14,3 +14,7 @@ ROS_BUILD_DEPENDS += " \
 
 
 inherit fix-ros
+
+# FILES:${PN} += " \
+#     /usr/lib/libisaac_ros_nitros.so \
+# "

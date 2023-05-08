@@ -18,10 +18,10 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-tegra-support \
   ##OEROOT##/meta-demo-ci \
   ##OEROOT##/meta-tegrademo \
-  ##OEROOT##/meta-ros/meta-ros2-humble \
+  ##OEROOT##/meta-myros/meta-ros2-humble \
   ##OEROOT##/meta-myros/meta-ros2 \
-  ##OEROOT##/meta-ros/meta-ros-common \
-  ##OEROOT##/meta-ros/meta-ros-python2 \
+  ##OEROOT##/meta-myros/meta-ros-common \
+  ##OEROOT##/meta-myros/meta-ros-python2 \
   ##OEROOT##/meta-python2 \
   "
 

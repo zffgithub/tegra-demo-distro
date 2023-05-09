@@ -44,12 +44,13 @@ def push_github_code(repo_path):
     repo_name = repo_path.split('/')[-1]
     cmd = f"""
     cd {repo_path};
+    rm -rf .git
     git init;
     git remote add origin https://github.com/zff-ros/{repo_name}.git;
     git add .;
     git commit -m "Initial commit";
     git branch -M main
-    git push -u origin main;
+    git push -f -u origin main;
     """
     res = cmd_process(cmd=cmd)
     print(res)
@@ -84,7 +85,7 @@ def create_github_repos():
             if 'isaac_ros' not in child_repo and 'negotiated' not in child_repo:
                 continue
             print(f"create_github_empty_repo: {child_repo}")
-            create_github_empty_repo(child_repo)
+            # create_github_empty_repo(child_repo)
             child_repo_path = f"{rootpath}/{repo_name}/{child_repo}"
             push_github_code(child_repo_path)
 

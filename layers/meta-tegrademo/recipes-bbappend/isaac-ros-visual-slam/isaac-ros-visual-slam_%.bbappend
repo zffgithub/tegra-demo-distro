@@ -13,6 +13,8 @@ SRCREV = "2390bc069d48a5e89feb23e232dc23392a75899b"
 
 inherit fix-ros
 
-# FILES:${PN} += " \
-#     /usr/lib/libisaac_ros_nitros.so \
-# "
+FILES:${PN} += " \
+    /usr/share/elbrus/libelbrus.so \
+"
+
+ALTERNATIVE_LINK_NAME[elbrus] = "${datadir}/elbrus"

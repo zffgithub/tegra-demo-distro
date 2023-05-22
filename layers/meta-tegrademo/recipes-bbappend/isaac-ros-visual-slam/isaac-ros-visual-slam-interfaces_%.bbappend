@@ -5,12 +5,7 @@ ROS_BUILDTOOL_DEPENDS += " \
 "
 
 ROS_BUILD_DEPENDS += " \
-    libeigen \
-    libnvvpi2 \
-    ament-lint-auto \
-    launch-testing-ament-cmake \
-    yaml-cpp \
-    cuda-nvtx \
+    action-msgs \
 "
 
 

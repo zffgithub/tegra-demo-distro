@@ -30,3 +30,7 @@
 	path = repos/meta-myros
 	url = https://github.com/zffgithub/meta-ros
 	branch = main
+[submodule "repos/meta-isaac"]
+	path = repos/meta-isaac
+	url = https://github.com/zffgithub/meta-isaac.git
+	branch = main

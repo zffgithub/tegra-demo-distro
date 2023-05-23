@@ -23,6 +23,7 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-myros/meta-ros-common \
   ##OEROOT##/meta-myros/meta-ros-python2 \
   ##OEROOT##/meta-python2 \
+  ##OEROOT##/meta-isaac \
   "
 
 BBFILE_PRIORITY_ros2-humble-layer:forcevariable = "39"

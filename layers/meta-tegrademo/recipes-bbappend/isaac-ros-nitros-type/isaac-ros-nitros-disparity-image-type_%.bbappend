@@ -1,1 +1,0 @@
-inherit fix-ros

@@ -5,9 +5,9 @@ inherit cuda
 # SRC_URI += "\
 #     file://libcudacxx_aarch64_cuda_11_4.diff \
 # "
-do_compile:prepend(){
-    patch -t -i ${COREBASE}/meta-tegrademo/files/libcudacxx_aarch64_cuda_11_4.diff ${STAGING_DIR_HOST}/usr/local/cuda-11.4/include/cuda/std/detail/libcxx/include/cmath
-}
+# do_compile:prepend(){
+#     patch -t -i ${COREBASE}/meta-tegrademo/files/libcudacxx_aarch64_cuda_11_4.diff ${STAGING_DIR_HOST}/usr/local/cuda-11.4/include/cuda/std/detail/libcxx/include/cmath
+# }
 
 
 ROS_BUILDTOOL_DEPENDS += " \
